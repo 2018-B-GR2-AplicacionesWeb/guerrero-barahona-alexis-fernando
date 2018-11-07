@@ -6,7 +6,7 @@ const fs = require('fs');
 
 
 
-const promesaEjercicio = (arregloStrings) => {
+const promesaEjercicio = (arregloStrings) => {//se puede definir tambien como function promesaEjercicio(){}
 
     const arregloRespuestas = [];
     
@@ -56,4 +56,9 @@ promesaEjercicio(['A', 'B', 'C'])
     }
 )
 
+
+
+//correicon append file
+
+//ver video
    
