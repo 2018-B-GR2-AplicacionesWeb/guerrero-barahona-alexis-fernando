@@ -49,3 +49,4 @@ let fecha2:Date = new Date();
 fecha2 = new Date('2018-05-06');
 
 
+//tsc nombreArchivo.ts    esto se llama transpilar porque el navegador sc   
