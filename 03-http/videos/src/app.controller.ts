@@ -28,6 +28,7 @@ export class AppController {
 
 
   @Get('despedirse')//aqui se define  //http.1192.168.1.6:3000/Usuario/metodoHola como le metodo lo que esta dentro dle controlador
+  
   @HttpCode(201)
   despedirse(): Promise<string> {//metodo
     return new Promise<string>(
@@ -35,6 +36,13 @@ export class AppController {
         resolve('adios');
       }
     )
+  }
+
+
+  @Get('inicio')
+  inicio(){
+    //header
+    return '<h1></h1>'
   }
 
 
