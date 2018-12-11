@@ -1,4 +1,4 @@
-import { Get, Controller, Request, HttpCode } from '@nestjs/common';
+import { Get, Controller, Request, HttpCode, Res, Post, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
 
@@ -20,6 +20,9 @@ import { AppService } from './app.service';
 export class AppController {
 
 
+  
+
+
 
   @Get('saludar')//aqui se define  //http.1192.168.1.6:3000/Usuario/metodoHola como le metodo lo que esta dentro dle controlador
   saludar(): string {//metodo
@@ -28,11 +31,11 @@ export class AppController {
 
 
   @Get('despedirse')//aqui se define  //http.1192.168.1.6:3000/Usuario/metodoHola como le metodo lo que esta dentro dle controlador
-  
+
   @HttpCode(201)
   despedirse(): Promise<string> {//metodo
     return new Promise<string>(
-      (resolve, reject)=>{
+      (resolve, reject) => {
         resolve('adios');
       }
     )
@@ -40,10 +43,57 @@ export class AppController {
 
 
   @Get('inicio')
-  inicio(){
-    //header
-    return '<h1></h1>'
+  inicio(
+    @Res() response
+  ) {
+    response.render('inicio', {
+      nombre: 'ALEXIS', //esto es como decirle renderiza la pagina inicio e ingresa ese nombre
+      arreglo: [
+        {
+          nombre: 'Adrian',
+          id: 1
+        },
+        {
+          nombre: 'Alexis',
+          id: 2
+        },
+        {
+          nombre: 'Micky',
+          id: 3
+        },
+      ]
+    })
+
+
   }
+
+  @Post('borrar/:idUsuario')
+  borrar(
+    @Param('idUsuario') idUsuario,
+    @Res() response
+  ) {
+    response.render('inicio', {
+      nombre: 'ALEXIS',
+      arreglo: [
+        {
+          nombre: 'Adrian',
+          id: 1
+        },
+        {
+          nombre: 'Alexis',
+          id: 2
+        },
+        {
+          nombre: 'Micky',
+          id: 3
+        },
+      ]
+    }
+
+    )
+  }
+
+
 
 
 

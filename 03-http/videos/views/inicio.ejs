@@ -1,0 +1,87 @@
+<!---modelo vista-->
+
+<style>
+table, th, td{
+    border: 1px solid black;
+}
+</style>
+
+
+
+
+<!---cuando se tiene solo % sin = no se muestra al cliente-->
+
+<% var apellido = "guerrero" %>
+<!---cuando se tiene solo % coin =si se muestra al cliente-->
+
+<h1>
+    <%=nombre%>
+    <%=apellido%>
+</h1>
+
+<p>PARRAFPO</p>
+<h2>ARREGLO</h2>
+
+<!---ul unordered list se indica con vi;etas-->
+<!---ol ordered list no se indica con vinetas-->
+
+<ol>
+    <!---li list item-->
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ol>
+
+<!---for each ordenado-->
+
+<ol>
+
+        <% arreglo.forEach((numero)=>{ %>
+           <li><%=numero.nombre%></li> 
+        <%})%>
+
+
+</ol>
+
+
+<!---for each sin ordenar-->
+<% arreglo.forEach((numero)=>{ %>
+<%=numero.nombre%>
+<%})%>
+
+
+<!--talbas es para ordenar-->
+
+
+<table>
+
+    <!--tr seria como las fileas-->
+    <tr>
+        <!--th seria como los headers o categoria-->
+        <th>IDENTIFICADOR</th>
+        <th>NOMBRE</th>
+        <th>ACCIONES</th>
+    </tr>
+
+    <% arreglo.forEach((usuario)=>{ %>
+        <tr>
+                <!--td es para los datos de llenado-->
+                <td><%=usuario.id%></td>
+                <td><%=usuario.nombre%></td>
+                <td>
+                    
+                    <button>eliminar a este puto </button>
+                </td>
+            </tr>
+
+
+
+    <%})%><!--finaliza for each-->
+
+   
+   
+    
+
+</table>
