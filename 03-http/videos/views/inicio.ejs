@@ -1,10 +1,18 @@
 <!---modelo vista-->
 
 <style>
-table, th, td{
+    table, th, td{
     border: 1px solid black;
 }
 </style>
+
+
+<a href="/Usuario/crear-usuario">
+    <button>Crear Usuario</button>
+
+</a>
+
+
 
 
 
@@ -38,9 +46,11 @@ table, th, td{
 
 <ol>
 
-        <% arreglo.forEach((numero)=>{ %>
-           <li><%=numero.nombre%></li> 
-        <%})%>
+    <% arreglo.forEach((numero)=>{ %>
+    <li>
+        <%=numero.nombre%>
+    </li>
+    <%})%>
 
 
 </ol>
@@ -60,28 +70,52 @@ table, th, td{
     <!--tr seria como las fileas-->
     <tr>
         <!--th seria como los headers o categoria-->
-        <th>IDENTIFICADOR</th>
         <th>NOMBRE</th>
+        <th>BIOGRAFIA</th>
         <th>ACCIONES</th>
     </tr>
 
     <% arreglo.forEach((usuario)=>{ %>
-        <tr>
-                <!--td es para los datos de llenado-->
-                <td><%=usuario.id%></td>
-                <td><%=usuario.nombre%></td>
-                <td>
-                    
-                    <button>eliminar a este puto </button>
-                </td>
-            </tr>
+    <tr>
+        <!-- td -> table detail -->
+        <td>
+            <%=usuario.nombre%>
+        </td>
+        <td>
+            <%=usuario.biografia%>
+        </td>
+
+        <td>
+            <form action="/Usuario/borrar/<%=usuario.id%>" method="post">
+                <!--button type="button">Yo no</button>-->
+                <!--<button>Yo si</button>-->
+                <button type="submit">Eliminar</button>
+            </form>
 
 
 
-    <%})%><!--finaliza for each-->
 
-   
-   
-    
+
+
+            <a href="/Usuario/actualizar-usuario/<%=usuario.id%>">
+                <button>Actualizar</button>
+            </a>
+
+
+
+
+
+
+        </td>
+    </tr>
+
+
+
+    <%})%>
+    <!--finaliza for each-->
+
+
+
+
 
 </table>
