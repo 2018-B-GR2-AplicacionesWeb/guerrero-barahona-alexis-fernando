@@ -69,73 +69,118 @@ export class AppController {
 
 
   @Get('inicio')
-  inicio(
-    @Res() response
-  ) {
-    response.render('inicio', {
-      nombre: 'ALEXIS', //esto es como decirle renderiza la pagina inicio e ingresa ese nombre
-      arreglo: this._usuarioService.usuarios
-    })
+    inicio(
+        @Res() response,
+        @Query('accion') accion: string,
+        @Query('nombre') nombre: string,
+        @Query('busqueda') busqueda: string,
+    ) {
 
 
-  }
+        let mensaje; // undefined
 
-  @Post('borrar/:idUsuario')
-  borrar(
-    @Param('idUsuario') idUsuario: string,
-    @Res() response
-  ) {
-    this._usuarioService.borrar(Number(idUsuario));
+        if (accion && nombre) {
+            switch (accion) {
+                case 'actualizar':
+                    mensaje = `Registro ${nombre} actualizado`;
+                    break;
+                case 'borrar':
+                    mensaje = `Registro ${nombre} eliminado`;
+                    break;
+                case 'crear':
+                    mensaje = `Registro ${nombre} creado`;
+                    break;
+            }
+        }
 
-    response.redirect('/Usuario/inicio');
-  }
+        let usuarios: Usuario[];
+        if (busqueda) {
+            usuarios = this._usuarioService
+                .buscarPorNombreOBiografia(busqueda);
+        } else {
+            usuarios = this._usuarioService.usuarios
+        }
+
+        response.render('inicio', {
+           nombre: 'Alexis',
+            arreglo: usuarios,
+            mensaje: mensaje
+        });
+    }
+
+    @Post('borrar/:idUsuario')
+    borrar(
+        @Param('idUsuario') idUsuario: string,
+        @Res() response
+    ) {
+        const usuario = this._usuarioService
+            .borrar(Number(idUsuario));
+
+        const parametrosConsulta = `?accion=borrar&nombre=${usuario.nombre}`;
+
+        response.redirect('/Usuario/inicio' + parametrosConsulta);
+    }
+
+    @Get('crear-usuario')
+    crearUsuario(
+        @Res() response
+    ) {
+        response.render(
+            'crear-usuario'
+        )
+    }
+
+    @Get('actualizar-usuario/:idUsuario')
+    actualizarUsuario(
+        @Param('idUsuario') idUsuario: string,
+        @Res() response
+    ) {
+        const usuarioAActualizar = this
+            ._usuarioService
+            .buscarPorId(Number(idUsuario));
+
+        response.render(
+            'crear-usuario', {
+                usuario: usuarioAActualizar
+            }
+        )
+    }
 
 
-  @Get('crear-usuario')
-  crearUsuario(
-    @Res() response
-  ) {
-    response.render(//metodo para rendezzir una pagina
+    @Post('actualizar-usuario/:idUsuario')
+    actualizarUsuarioFormulario(
+        @Param('idUsuario') idUsuario: string,
+        @Res() response,
+        @Body() usuario: Usuario
+    ) {
+        usuario.id = +idUsuario;
 
-      'crear-usuario'
+        this._usuarioService
+            .actualizar(+idUsuario, usuario);
 
-    )
+        const parametrosConsulta = `?accion=actualizar&nombre=${usuario.nombre}`;
 
-  }
+        response.redirect('/Usuario/inicio' + parametrosConsulta);
 
-
-  @Post('crear-usuario')
-  crearUsuarioFormulario(
-    @Body() usuario: Usuario,
-    @Res() response
-  ) {
-
-    this._usuarioService.crear(usuario);
-
-    response.redirect('/Usuario/inicio')//aqui no se renderiza, porque comoes post solo deberia mandarse al servidor
-
-  }
+    }
 
 
-  @Get('actualizar-usuario/:idUsuario')
-  actualizarUsuario(
-      @Param('idUsuario') idUsuario: string,
-      @Res() response
-  ) {
-      const usuarioAActualizar = this
-          ._usuarioService
-          .buscarPorId(Number(idUsuario));
+    @Post('crear-usuario')
+    crearUsuarioFormulario(
+        @Body() usuario: Usuario,
+        @Res() response
+    ) {
 
-      response.render(
-          'crear-usuario', {
-              usuario: usuarioAActualizar
-          }
-      )
-  }
+        this._usuarioService.crear(usuario);
+
+        const parametrosConsulta = `?accion=crear&nombre=${usuario.nombre}`;
+
+        response.redirect('/Usuario/inicio' + parametrosConsulta)
+    }
 
 
 
-  
+
 
 
 

@@ -32,21 +32,20 @@ export class UsuarioService {
 
     }
 
-    actualizar(idUsuario: number, usuarioActualizado: Usuario): Usuario {
 
+
+    actualizar(idUsuario: number,
+        nuevoUsuario: Usuario): Usuario {
         const indiceUsuario = this
             .usuarios
             .findIndex(
                 (usuario) => usuario.id === idUsuario
             );
-        this.usuarios[indiceUsuario] = usuarioActualizado;
-        return usuarioActualizado;
-
-
-
-
-
+        this.usuarios[indiceUsuario] = nuevoUsuario;
+        return nuevoUsuario;
     }
+
+
 
     borrar(idUsuario: number): Usuario {
 
@@ -65,12 +64,36 @@ export class UsuarioService {
 
     buscarPorId(idUsuario: number) {
         return this.usuarios
-        // .find(u=>u.id === idUsuario);
+            // .find(u=>u.id === idUsuario);
             .find(
                 (usuario) => {
                     return usuario.id === idUsuario
                 }
             );
+    }
+
+    buscarPorNombreOBiografia(busqueda:string):Usuario[]{
+
+        return this.usuarios.filter(
+            (usuario)=>{
+                //Si la busqueda contiene algo del nombre
+
+                const tieneAlgoEnElnombre = usuario
+                    .nombre.includes(busqueda); // True / False
+
+
+                
+
+                //Siu la busqueda conitnee algo de la biografia
+
+                const tieneAlgoEnLaBio = usuario
+                    .biografia.includes(busqueda);// True / False
+
+                return tieneAlgoEnElnombre || tieneAlgoEnLaBio;
+            }
+        )
+
+
     }
 
 
